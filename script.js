@@ -96,25 +96,12 @@ function getTempExt(){
 	})
 }
 
-let template = document.getElementById('myTemplate');
-let templateContent = document.importNode(template.content, true);
-document.body.appendChild(templateContent);
-
-
+/*
 let comm = document.createElement('p');
 comm.setAttribute('slot', 'commentaire');
 comm.textContent = 'Mon commentaire';
 
-let data = document.createElement('p');
-data.setAttribute('slot', 'data');
-data.textContent = 'Ma data';
-
-let historique = document.createElement('p');
-historique.setAttribute('slot', 'historique');
-historique.textContent = 'Mon historique';
-
 templateContent.appendChild(comm);
-templateContent.appendChild(data);
-templateContent.appendChild(historique);
 
-document.body.appendChild(templateContent);
+
+document.body.appendChild(templateContent);*/

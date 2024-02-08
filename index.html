@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
-    <title>Document</title>
+    <title>TestJSHothothot</title>
 </head>
 <body>
     <section>
@@ -18,8 +18,29 @@
         <p id="histo" class="hidden">Historique des températures :</p>
     </section>
 
-<template id="myTemplate">
-  <p>Ceci est un template.</p>
+<template id="value-template">
+  <value>
+    <h1 id="advertTemp" role="alert" class="hidden"><slot name="advert-message">ADVERT MESSAGE</slot></h1>
+    <p id="temp" aria-live="polite"><slot name="insert-value">INSERT VALUE HERE</slot></p>
+    <h1 id="titre-histo" class="hidden"><slot name="titre-histo">NEED HISTORIQuE VALUE NAME(Historique des températures :)</slot></h1>
+    <table id="histo">
+    </table>
+  </value>
 </template>
+
+<template id="">
+    <value>
+      <summary>
+        <code class="name">
+          &lt;<slot name="element-name">NEED NAME</slot>&gt;
+        </code>
+        <span class="desc"><slot name="description">NEED DESCRIPTION</slot></span>
+      </summary>
+      <div class="attributes">
+        <h4>Attributes</h4>
+        <slot name="attributes"><p>None</p></slot>
+      </div>
+    </value>
+</template> 
 </body>
 </html>
