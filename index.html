@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+    <title>Document</title>
+</head>
+<body>
+    <section>
+        <nav>
+            <button onclick="showTemp()">Relevé</button>
+            <button onclick="showHisto()">Historique</button>
+        </nav>
+        <h1 id="advertTemp" role="alert" class="hidden"></h1>
+        <p id="temp" aria-live="polite"></p>
+        <p id="histo" class="hidden">Historique des températures :</p>
+    </section>
+
+<template id="myTemplate">
+  <p>Ceci est un template.</p>
+</template>
+</body>
+</html>

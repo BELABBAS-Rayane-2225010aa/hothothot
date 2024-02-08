@@ -1,0 +1,23 @@
+.blue {
+    border: 2px;
+    color: blue;
+}
+
+.green {
+    border: 2px;
+    color: green;
+}
+
+.orange {
+    border: 2px;
+    color: orange;
+}
+
+.red {
+    border: 2px;
+    color: red;
+}
+
+.hidden {
+    display:none;
+}
