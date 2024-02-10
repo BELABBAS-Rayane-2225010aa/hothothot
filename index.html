@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+<head>
+  <title>Observateur</title>
+</head>
+<body>
+
+<h2>Pattern Observateur</h2>
+
+<script>
+  /* Le Sujet observable*/
+  class Observable {
+    constructor() {
+      this.observers = [];
+    }
+
+    subscribe(ob) {
+      this.observers.push(ob);
+      console.log(this.observers);
+    }
+
+    unsubscribe(ob) {
+      // TODO
+    }
+
+    notify(data) {
+      this.observers.forEach((observer) => observer.update(data));
+    }
+
+  }
+
+
+  /* Les observateurs */
+  class Logger {
+    constructor() {
+
+    }
+
+    update(data) {
+      console.log(data + 'Logger');
+    }
+
+  }
+
+  class Logger2 {
+    constructor() {
+
+    }
+
+    update(data) {
+      console.log(data + 'Logger 2');
+    }
+  }
+
+  class Logger3 {
+    constructor() {
+
+    }
+
+    update(data) {
+      console.log(data + 'Logger3');
+    }
+
+  }
+
+  ob = new Observable();
+
+  ob.subscribe(new Logger);
+  ob.subscribe(new Logger2);
+  ob.subscribe(new Logger3);
+
+
+  ob.notify("Go");
+
+
+</script>
+</body>
+</html>
