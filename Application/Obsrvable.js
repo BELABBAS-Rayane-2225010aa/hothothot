@@ -9,7 +9,8 @@ class Observable {
     }
 
     unsubscribe(ob) {
-        // TODO
+        let i = this.observers.indexOf(ob);
+        this.observers.slice(i, i+1);
     }
 
     notify(data) {
