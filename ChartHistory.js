@@ -23,6 +23,8 @@ export class ChartHistory {
         let datetime = new Date(timestamp*1000);
         this.histo.innerHTML += "<br\>"+temperature+"°<abbr title='Celsius'>C</abbr> "+datetime.toLocaleString();
     }
+    
+    //TODO: display timestamp on chart
     updateChart() {
         const tabLabel = this.lengthTab.length > 20 ? this.lengthTab.slice(this.lengthTab.length - 20) : this.lengthTab;
         const myChart = new Chart(this.chartView, {
