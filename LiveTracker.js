@@ -2,8 +2,11 @@ export class LiveTracker {
     constructor() {
         this.temperature = 0;
         this.timestamp = 0;
+        this.minTemperature=1000;
+        this.maxTemperature=-1000;
         this.notifcation = document.getElementById("msg");
         this.liveDisplay = document.getElementById("tab");
+        this.liveMinMax = document.getElementById("minMax");
     }
 
     update(data) {
@@ -15,7 +18,8 @@ export class LiveTracker {
             this.displayTempInt();
         }*/
         this.displayTempInt();
-        //TODO : display Max et Min
+        this.dayMinMax(this.temperature);
+        this.dayTemperature();
     }
 
     displayTemperature() {
@@ -64,5 +68,12 @@ export class LiveTracker {
             this.notifcation.innerHTML = "Appelez les pompiers ou arrêtez votre barbecue !";
         }
         this.liveDisplay.innerHTML = this.temperature + "<abbr title='Celsius'>°C</abbr>";
+    }
+    dayTemperature(){
+        this.liveMinMax.innerHTML= "Ajourd'hui: min: "+this.minTemperature+" max: "+this.maxTemperature;
+    }
+    dayMinMax(temperature){
+        if (temperature>this.maxTemperature){this.maxTemperature=temperature;}
+        if (temperature<this.minTemperature){this.minTemperature=temperature;}
     }
 }
