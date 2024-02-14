@@ -36,7 +36,7 @@ export class Historique {
                     data: this.temperature.slice(tabLabel[0])
                 }]
             },
-            options: { legend: { display: false }, maintainAspectRatio: true }
+            options: { legend: { display: false }, maintainAspectRatio: true}
         });
         this.lengthTab.push(this.currentIndex + 1);
 

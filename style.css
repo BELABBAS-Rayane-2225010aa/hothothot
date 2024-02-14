@@ -43,16 +43,12 @@ section {
     margin-bottom: 20px;
 }
 
-.chart {
-    max-width: 50%;
-    height: 400px;
-}
 
 /* Cacher par défaut l'onglet historique */
 #historique-tab {
     display: none;
 }
 .chart {
-    max-width: 50%;
-    height: 400px;
+    max-width: 50em;
+    max-height: 25em;
 }
