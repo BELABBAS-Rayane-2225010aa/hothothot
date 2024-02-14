@@ -1,11 +1,11 @@
-export class Historique {
-    constructor() {
+export class ChartHistory {
+    constructor(histo, chartView) {
         this.temperature = [];
         this.timestamp = [];
         this.lengthTab = [0];
         this.currentIndex = 0;
-        this.histo = document.getElementById("histo");
-        this.chartView = document.getElementById("myChart");
+        this.histo = histo;
+        this.chartView = chartView;
     }
 
     update(data) {
