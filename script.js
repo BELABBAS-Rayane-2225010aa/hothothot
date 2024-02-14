@@ -10,7 +10,7 @@ observer.subscribe(liveTemperatureTracker);
 observer.subscribe(histo);
 
 setInterval(() => {
-    /*fetch("https://hothothot.dog/api/capteurs/exterieur",
+    fetch("https://hothothot.dog/api/capteurs/exterieur",
 		{
 		    headers: {
 		      'Accept': 'application/json',
@@ -21,15 +21,11 @@ setInterval(() => {
         .then(function(response) {
             return response.json().then(function(response) {
                 var data = response.capteurs[0];
+                data.Valeur = Math.floor(Math.random() * (40 - (-10)) + (-10));
                 console.log(data);
                 observer.notify(response.capteurs[0]);
             })
-        })*/
-    let data = {
-        Valeur: Math.floor(Math.random() * (40 - (-10)) + (-10)),
-        Timestamp: new Date().toISOString()
-    };
-    observer.notify(data);
+        })
     }, 2000);
 
 const tabs = document.querySelectorAll('[role="tab"]');

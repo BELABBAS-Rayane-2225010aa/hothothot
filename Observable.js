@@ -1,20 +1,20 @@
 export class Observable {
     constructor() {
-      this.observers = [];
+        this.observers = [];
     }
 
     subscribe(ob) {
-      this.observers.push(ob);
-      console.log(this.observers);
+        this.observers.push(ob);
+        console.log(this.observers);
     }
 
     unsubscribe(ob) {
-      let i = this.observers.indexOf(ob);
-      this.observers.slice(i, i+1);
+        let i = this.observers.indexOf(ob);
+        this.observers.slice(i, i+1);
     }
 
     notify(data) {
-      this.observers.forEach((observer) => observer.update(data));
+        this.observers.forEach((observer) => observer.update(data));
     }
 
 }
