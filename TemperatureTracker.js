@@ -3,7 +3,7 @@ class TemperatureTracker {
         this.temperatures = [];
         this.interval = null;
         this.currentIndex = 0;
-        this.lengthTab = [];
+        this.lengthTab = [0];
         this.tabView = document.getElementById('tab');
         this.messageView = document.getElementById("msg");
         this.chartView = document.getElementById("myChart");
@@ -32,8 +32,7 @@ class TemperatureTracker {
             const temperature = this.temperatures[this.currentIndex];
             this.displayMessage(temperature);
             this.displayTemperatureValue(temperature);
-            this.updateChart();
-            this.currentIndex++;
+
         }
     }
 
@@ -57,37 +56,6 @@ class TemperatureTracker {
         this.tabView.innerHTML = temperature + "<abbr title='Celsius'> °C</abbr>";
     }
 
-    updateChart() {
-        const template = document.querySelector("#histo-template");
-        const section = document.querySelector("#histrique-tab");
-        const clone = document.importNode(template.content, true);
-        const td = clone.querySelectorAll("td");
-        td[0].textContent = this.temperatures[this.currentIndex];
-        td[0].className = this.tabView.className;
-        section.appendChild(clone);
-
-        if (this.currentIndex % 20 === 0 && this.currentIndex != 0) {
-            const template2 = document.querySelector("#histo-line");
-            const clone2 = document.importNode(template2.content, true);
-            section.appendChild(clone2);
-        }
-
-        this.lengthTab.push(this.currentIndex + 1);
-        const tabLabel = this.lengthTab.length > 20 ? this.lengthTab.slice(this.lengthTab.length - 20) : this.lengthTab;
-
-        const myChart = new Chart(this.chartView, {
-            type: "line",
-            data: {
-                labels: tabLabel,
-                datasets: [{
-                    backgroundColor: "rgba(0,0,255,0.0)",
-                    borderColor: "rgba(0,0,255,0.5)",
-                    data: this.temperatures.slice(tabLabel[0])
-                }]
-            },
-            options: { legend: { display: false }, responsive: true, maintainAspectRatio: true }
-        });
-    }
 }
 
 const temperatureTracker = new TemperatureTracker();
