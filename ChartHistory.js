@@ -1,11 +1,11 @@
-export class Historique {
-    constructor() {
+export class ChartHistory {
+    constructor(histo, chartView) {
         this.temperature = [];
         this.timestamp = [];
         this.lengthTab = [0];
         this.currentIndex = 0;
-        this.histo = document.getElementById("histo");
-        this.chartView = document.getElementById("myChart");
+        this.histo = histo;
+        this.chartView = chartView;
         this.myChart = new Chart(this.chartView, {
             type: "line",
             data: {
@@ -35,6 +35,8 @@ export class Historique {
         let datetime = new Date(timestamp*1000);
         this.histo.innerHTML += "<br\>"+temperature+"°<abbr title='Celsius'>C</abbr> "+datetime.toLocaleString();
     }
+    
+    //TODO: display timestamp on chart
     updateChart() {
         const tabLabel = this.lengthTab.length > 20 ? this.lengthTab.slice(-20) : this.lengthTab;
         const tabData = this.temperature.slice(-20).map((value, index) => value); // Map to last 20 values

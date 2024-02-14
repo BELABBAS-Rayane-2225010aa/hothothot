@@ -1,3 +1,51 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #333;
+}
+
+button {
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+#tabList {
+    display: flex;
+    justify-content: center;
+}
+
+.nomTemporaire {
+    display: flex;
+    justify-content: space-evenly;
+    border: 1px solid #ccc;
+    background-color: #BFC9CA;
+    padding: 10px;
+    border-radius: 7px;
+    margin: 10px;
+}
+
+.nomTemporaire section {
+    margin-right: 10px;
+    background-color: #D2D9DA;
+    border-style: solid;
+    border-color: white;
+    border-width: 1px;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 2px;
+}
+
 .blue {
     border: 2px;
     color: blue;
@@ -18,36 +66,6 @@
     color: red;
 }
 
-.hidden {
-    display:none;
-}
-
-body {
-    font-family: Arial, sans-serif;
-}
-
-h1 {
-    color: #333;
-}
-
-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-section {
-    margin-bottom: 20px;
-}
-
-
-/* Cacher par défaut l'onglet historique */
-#historique-tab {
-    display: none;
-}
 .chart {
     max-width: 50em;
     max-height: 25em;
