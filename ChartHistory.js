@@ -6,6 +6,18 @@ export class ChartHistory {
         this.currentIndex = 0;
         this.histo = histo;
         this.chartView = chartView;
+        this.myChart = new Chart(this.chartView, {
+            type: "line",
+            data: {
+                labels: this.lengthTab,
+                datasets: [{
+                    backgroundColor: "rgba(0,0,255,0.0)",
+                    borderColor: "rgba(0,0,255,0.5)",
+                    data: this.temperature
+                }]
+            },
+            options: { legend: { display: false },animation: false, maintainAspectRatio: true}
+        });
     }
 
     update(data) {
@@ -26,19 +38,12 @@ export class ChartHistory {
     
     //TODO: display timestamp on chart
     updateChart() {
-        const tabLabel = this.lengthTab.length > 20 ? this.lengthTab.slice(this.lengthTab.length - 20) : this.lengthTab;
-        const myChart = new Chart(this.chartView, {
-            type: "line",
-            data: {
-                labels: tabLabel,
-                datasets: [{
-                    backgroundColor: "rgba(0,0,255,0.0)",
-                    borderColor: "rgba(0,0,255,0.5)",
-                    data: this.temperature.slice(tabLabel[0])
-                }]
-            },
-            options: { legend: { display: false }, maintainAspectRatio: true}
-        });
+        const tabLabel = this.lengthTab.length > 20 ? this.lengthTab.slice(-20) : this.lengthTab;
+        const tabData = this.temperature.slice(-20).map((value, index) => value); // Map to last 20 values
+
+        this.myChart.data.labels = tabLabel;
+        this.myChart.data.datasets[0].data = tabData;
+        this.myChart.update();
         this.lengthTab.push(this.currentIndex + 1);
     }
 
