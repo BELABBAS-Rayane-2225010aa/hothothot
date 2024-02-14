@@ -1,7 +1,7 @@
-import { Observable } from "../Class/Observable.js";
-import { LiveTrackerExt } from "../Class/LiveTrackerExt.js";
-import { LiveTrackerInt } from "../Class/LiveTrackerInt.js";
-import { ChartHistory } from "../Class/ChartHistory.js";
+import { Observable } from "../Controllers/Observable.js";
+import { LiveTrackerExt } from "../Controllers/LiveControllers/LiveTrackerExt.js";
+import { LiveTrackerInt } from "../Controllers/LiveControllers/LiveTrackerInt.js";
+import { ChartHistory } from "../Controllers/ChartHistory.js";
 
 let tempSensorExt = new Observable();
 
