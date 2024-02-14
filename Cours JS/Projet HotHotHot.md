@@ -6,7 +6,7 @@
 
   
 
-Travail en groupe de 5 à rendre avant le  **février 2024**, 0h00 (donc le dimanche au plus tard).
+Travail en groupe de 5 à rendre avant le  **18 février 2024**, 0h00 (donc le dimanche au plus tard).
   
 _HotHotHot_ est une application dont le rôle est d’être une interface d’information et de gestion d’un système domotique.
 

@@ -1,0 +1,54 @@
+.blue {
+    border: 2px;
+    color: blue;
+}
+
+.green {
+    border: 2px;
+    color: green;
+}
+
+.orange {
+    border: 2px;
+    color: orange;
+}
+
+.red {
+    border: 2px;
+    color: red;
+}
+
+.hidden {
+    display:none;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #333;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+.chart {
+    max-width: 50%;
+    height: 400px;
+}
+
+/* Cacher par défaut l'onglet historique */
+#historique-tab {
+    display: none;
+}
