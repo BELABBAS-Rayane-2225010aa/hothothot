@@ -3,10 +3,8 @@ class TemperatureTracker {
         this.temperatures = [];
         this.interval = null;
         this.currentIndex = 0;
-        this.lengthTab = [0];
         this.tabView = document.getElementById('tab');
         this.messageView = document.getElementById("msg");
-        this.chartView = document.getElementById("myChart");
     }
 
     generateRandomTemperatures() {

@@ -4,6 +4,9 @@ export class Historique {
         this.timestamp = [];
         this.lengthTab = [0];
         this.currentIndex = 0;
+        this.minTemperature=0;
+        this.maxTemperature=0;
+        this.dejaAffiche=false;
         this.histo = document.getElementById("histo");
         this.chartView = document.getElementById("myChart");
     }
@@ -11,6 +14,7 @@ export class Historique {
     update(data) {
         this.temperature.push(data.Valeur);
         this.timestamp.push(data.Timestamp);
+        this.weekMinMax(data.Valeur);
         this.displayTemperature();
         this.updateChart();
         this.currentIndex++;
@@ -20,9 +24,12 @@ export class Historique {
         let i = this.temperature.length - 1;
         let temperature = this.temperature[i];
         let timestamp = this.timestamp[i];
-        let datetime = new Date(timestamp*1000);  
-
+        let datetime = new Date(timestamp*1000);
         this.histo.innerHTML += "<br\>"+temperature+"°<abbr title='Celsius'>C</abbr> "+datetime.toLocaleString();
+        if(datetime.getDay()==0 && this.dejaAffiche==false){
+            this.weekTemperature();
+            this.dejaAffiche=true;
+        }else {this.dejaAffiche=false}
     }
     updateChart() {
         const tabLabel = this.lengthTab.length > 20 ? this.lengthTab.slice(this.lengthTab.length - 20) : this.lengthTab;
@@ -39,6 +46,12 @@ export class Historique {
             options: { legend: { display: false }, maintainAspectRatio: true}
         });
         this.lengthTab.push(this.currentIndex + 1);
-
+    }
+    weekTemperature(){
+        this.histo.innerHTML +="<br\>"+"Cette semaine les temperatures sont allez de "+this.minTemperature+"°<abbr title='Celsius'>C</abbr> "+" à "+this.maxTemperature+"°<abbr title='Celsius'>C</abbr> ";
+    }
+    weekMinMax(temperature){
+        if (temperature>this.maxTemperature){this.maxTemperature=temperature;}
+        else if (temperature<this.minTemperature){this.minTemperature=temperature;}
     }
 }
