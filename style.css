@@ -1,0 +1,50 @@
+.bleu {
+    border: 2px solid blue;
+    color: blue;
+}
+.vert {
+    border: 2px solid green;
+    color: green;
+}
+.orange {
+    border: 2px solid orange;
+    color: orange;
+}
+.rouge {
+    border: 2px solid red;
+    color: red;
+}
+body {
+    font-family: Arial, sans-serif;
+}
+
+h1 {
+    color: #333;
+}
+
+input[type="button"] {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+section {
+    margin-bottom: 20px;
+}
+
+#msg {
+    color: red;
+}
+
+.chart {
+    max-width: 50%;
+    height: 400px;
+}
+
+/* Cacher par défaut l'onglet historique */
+#historique-tab {
+    display: none;
+}

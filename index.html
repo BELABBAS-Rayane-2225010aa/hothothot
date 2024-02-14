@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <h1>HOTHOTHOT</h1>
+    <input id="buttonR" type="button" value="Relevé" onclick="switchOnglet(1)">
+    <input id="buttonH" type="button" value="Historique" onclick="switchOnglet(2)">
+    <section id="1">
+        <h2>relevé</h2>
+        <p id="msg" class="" role="alert"></p>
+        <p id="tab" class="" aria-live="polite"></p>
+    </section>
+    <section id="histrique-tab" style="display: none">
+        <h2>historique</h2>
+        <canvas id="myChart" class="chart"></canvas>
+    </section>
+    <template id="histo-template">
+        <td class=""></td>
+    </template>
+    <template id="histo-line">
+        <tr class=""></tr>
+    </template>
+    <script src="script.js"></script>
+</body>
+</html>
