@@ -52,3 +52,7 @@ section {
 #historique-tab {
     display: none;
 }
+.chart {
+    max-width: 50%;
+    height: 400px;
+}
