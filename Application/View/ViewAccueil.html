@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta HTTP-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <title>Observateur</title>
+    <link type="text/css" rel="stylesheet" href="../../ui/style.css">
+</head>
+<body>
+
+<h2>Pattern Observateur</h2>
+
+<nav>
+    <a class="navBar" href="ViewAccueil.html">Accueil</a>
+    <a class="navBar" href="ViewDocumentation.html">Documentation</a>
+</nav>
+<div class="tabs">
+    <div role="tablist" id="tabList">
+        <button
+                class="tabButton"
+                role="tab"
+                aria-selected="true"
+                aria-controls="panel-1"
+                id="tab-1"
+                tabindex="0">
+            Temps Réel
+        </button>
+        <button
+                class="tabButton"
+                role="tab"
+                aria-selected="false"
+                aria-controls="panel-2"
+                id="tab-2"
+                tabindex="-1">
+            Historique
+        </button>
+        <button
+                class="tabButton"
+                role="tab"
+                aria-selected="false"
+                aria-controls="panel-3"
+                id="tab-3"
+                tabindex="-1">
+            Notifications
+        </button>
+    </div>
+    <div id="panel-1" role="tabpanel" tabindex="0" aria-labelledby="tab-1">
+        <section id="sectionReel">
+            Ici la température en temps réel
+        </section>
+    </div>
+    <div id="panel-2" role="tabpanel" tabindex="0" aria-labelledby="tab-2" hidden>
+        <section id="sectionHist">
+            Ici l'historique des température
+        </section>
+    </div>
+    <div id="panel-3" role="tabpanel" tabindex="0" aria-labelledby="tab-3" hidden>
+        <section id="sectionNotif">
+            Ici les notifications
+        </section>
+    </div>
+</div>
+
+<script>
+    const tabs = document.querySelectorAll('[role="tab"]');
+    const tabList = document.querySelector('[role="tablist"]');
+
+    tabs.forEach((tab) => {
+        tab.addEventListener("click", changeTabs);
+    });
+
+    function changeTabs(e) {
+        const target = e.target;
+        const parent = target.parentNode;
+        const grandparent = parent.parentNode;
+
+        // Remove all current selected tabs
+        parent
+            .querySelectorAll('[aria-selected="true"]')
+            .forEach((t) => t.setAttribute("aria-selected", false));
+
+        // Set this tab as selected
+        target.setAttribute("aria-selected", true);
+
+        // Hide all tab panels
+        grandparent
+            .querySelectorAll('[role="tabpanel"]')
+            .forEach((p) => p.setAttribute("hidden", true));
+
+        // Show the selected panel
+        grandparent.parentNode
+            .querySelector(`#${target.getAttribute("aria-controls")}`)
+            .removeAttribute("hidden");
+    }
+</script>
+
+</body>
+</html>

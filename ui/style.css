@@ -1,0 +1,67 @@
+@keyframes rainbow {
+    5% {color: yellow}
+    10% {color: yellowgreen}
+    20% {color: lightgreen}
+    30% {color: green}
+    40% {color: lightseagreen}
+    50% {color: blue}
+    60% {color: blueviolet}
+    70% {color: purple}
+    80% {color: darkred}
+    90% {color: crimson}
+    95% {color: red}
+    100% {color: orange}
+}
+
+
+
+
+body {
+    background-color: antiquewhite;
+    margin-inline: 0;
+}
+
+
+
+nav {
+    border: solid darkblue 2px;
+    background-color: darkgray;
+    display: flex;
+    justify-content: space-around;
+}
+
+.navBar {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    box-sizing: border-box;
+    text-decoration: none;
+    color: black;
+}
+
+.navBar:hover {
+    background-color: lightgrey;
+}
+
+#tabList {
+    display: flex;
+    background-color: white;
+    margin-inline: 1px;
+    justify-content: space-around;
+}
+
+.tabs {
+    margin-top: 1vh;
+    background-color: white;
+    margin-inline: 2vh;
+}
+
+.tabButton {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+h2 {
+    text-align: center;
+    animation : rainbow 5s infinite;
+}
