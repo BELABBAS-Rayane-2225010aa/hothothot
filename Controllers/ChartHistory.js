@@ -14,6 +14,13 @@ export class ChartHistory {
                     backgroundColor: "rgba(0,0,255,0.0)",
                     borderColor: "rgba(0,0,255,0.5)",
                     data: this.temperature
+                },
+                {
+                    label: 'Valeur 2',
+                    data: [2, 29, 5, 5, 20, 3, 10, 18, 9, 20, 21, 22],
+                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    borderWidth: 1
                 }]
             },
             options: { legend: { display: false },animation: false, maintainAspectRatio: true}
