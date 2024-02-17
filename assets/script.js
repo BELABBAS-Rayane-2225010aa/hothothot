@@ -29,9 +29,29 @@ let tempHistoryInt = new ChartHistory(histoInt, chartViewInt);
 tempSensorInt.subscribe(liveTempTrackerInt);
 tempSensorInt.subscribe(tempHistoryInt);
 
+var socket = new WebSocket('wss://ws.hothothot.dog:9502');
+
+socket.addEventListener("error", (event) => {
+    console.log("WebSocket error: ", event);
+});
+
+socket.onopen = function(event) {
+    console.log("Connexion établie");
+
+    //Envoi d'un message au serveur (obligatoire)
+    socket.send("coucou !");
+
+    // au retour...
+    socket.onmessage = function(event) {
+        console.log("Message reçu : " + event.data);
+    }
+};
+
+	
+
 setInterval(() => {
     // récupération des données de température extérieure
-    fetch("https://hothothot.dog/api/capteurs/exterieur",
+    /*fetch("https://hothothot.dog/api/capteurs/exterieur",
 		{
 		    headers: {
 		      'Accept': 'application/json',
@@ -46,7 +66,7 @@ setInterval(() => {
                 console.log(data);
                 tempSensorExt.notify(response.capteurs[0]);
             })
-        })
+        })*/
     // récupération des données de température intérieure
     fetch("https://hothothot.dog/api/capteurs/interieur",
         {
@@ -60,7 +80,7 @@ setInterval(() => {
             return response.json().then(function(response) {
                 var data = response.capteurs[0];
                 data.Valeur = Math.floor(Math.random() * (40 - (-10)) + (-10));
-                console.log(data);
+                //console.log("intérieur :",data);
                 tempSensorInt.notify(response.capteurs[0]);
             })
         })
