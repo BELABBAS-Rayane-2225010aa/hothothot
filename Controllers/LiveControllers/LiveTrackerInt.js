@@ -33,6 +33,6 @@ export class LiveTrackerInt extends LiveTrackerInterface{
             this.liveDisplay.className = "red";
             this.notifcation.innerHTML = "Appelez les pompiers ou arrêtez votre barbecue !";
         }
-        this.liveDisplay.innerHTML = this.temperature + "<abbr title='Celsius'>°C</abbr>";
+        this.liveDisplay.innerHTML = this.temperature;
     }
 }

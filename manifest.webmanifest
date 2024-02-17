@@ -5,10 +5,15 @@
     "short_name":"hothothot",
     "icons":[
        {
-          "src":"\/assets\/images\/touch\/android-chrome-192x192.png",
+          "src":"/assets/images/android-chrome-192x192.png",
           "sizes":"192x192",
-          "type":"image\/png"
-       }
+          "type":"image/png"
+       },
+      {
+         "src":"/assets/images/android-chrome-384x384.png",
+         "sizes":"384x384",
+         "type":"image/png"
+      }
     ],
     "theme_color":"#1a1a1a",
     "background_color":"#1a1a1a",

@@ -30,7 +30,7 @@ export class LiveTrackerExt extends LiveTrackerInterface{
             this.liveDisplay.className = "green";
             this.notifcation.innerHTML = "Température extérieure normale.";
         }
-        this.liveDisplay.innerHTML = this.temperature + "<abbr title='Celsius'>°C</abbr>";
+        this.liveDisplay.innerHTML = this.temperature;
     }
 
     

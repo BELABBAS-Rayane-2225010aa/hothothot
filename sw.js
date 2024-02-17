@@ -5,6 +5,15 @@
 
 var CACHE = 'hothothot';
 
+let button = document.getElementById("notifications");
+button.addEventListener('click', function(e) {
+    Notification.requestPermission().then(function(result) {
+        if(result === 'granted') {
+            notification();
+        }
+    });
+});
+
 // On installe le service worker
 self.addEventListener('install', function(evt) {  
   evt.waitUntil(caches.open(CACHE).then(function (cache) {  
@@ -12,6 +21,12 @@ self.addEventListener('install', function(evt) {
                 // Ajout des fichiers à mettre en cache
                 //TODO : verifier quels fichiers sont à mettre en cache
                 "/index.html",
+                "/View/documentation.html",
+                "/View/logout.html",
+                "/Controllers/CharHistory.js",
+                "/Controllers/Observable.js",
+                "/assets/script.js",
+                "/assets/style.css",
                 "/sw.js",
       ]);  
   }));  
@@ -80,36 +95,85 @@ function refresh(response) {
     });  
 }
 
-
 // Système de notification
-function randomNotification() {  
-    var randomNumber = getRandomInt(5);  
-	  console.log(randomNumber);  
-	 if(randomNumber >= 2) {  
-	  
-		 var notifTitle = "Chaud, non ?";  
-		 var notifBody = 'Température : ' + randomNumber + '.';  
-		 var notifImg = '/assets/images/android-chrome-192x192.png';  
-		 var options = {  
-            body: notifBody,  
-            icon: notifImg  
-        } 
-        var notif = new Notification(notifTitle, options);   
-    }  
-    setTimeout(randomNotification, 30000);  
-}
+function notification() {
+    var TempExt = document.getElementById('tabExt').innerHTML;
+    var TempInt = document.getElementById('tabInt').innerHTML;
+    console.log(TempExt);
+    console.log(TempInt);
+    var notifTitle = "";
+    var notifBody = "";
+    var notifImg = "";
+    var options = {};
+    var notif = {};
+    if(parseInt(TempExt) > 35) {
 
-//TODO : ajouter dans la page de demande de notification
-/**
-	var button = document.getElementById("notifications");  
-	button.addEventListener('click', function(e) {  
-	    Notification.requestPermission().then(function(result) {  
-	        if(result === 'granted') {  
-	            randomNotification();  
-	  }  
-	    });  
-	});
- */
+		 notifTitle = "alerte : Hot Hot Hot !";
+		 notifBody = 'Température extérieur : ' + TempExt + '.';
+		 notifImg = '/www/hothothot/assets/images/android-chrome-192x192.png';
+		 options = {
+            body: notifBody,
+            icon: notifImg
+        }
+        notif = new Notification(notifTitle, options);
+    }
+    if(parseInt(TempExt) < 0) {
+
+        notifTitle = "alerte : Banquise en vue !";
+        notifBody = 'Température extérieur : ' + TempExt + '.';
+        notifImg = '/www/hothothot/assets/images/android-chrome-192x192.png';
+        options = {
+            body: notifBody,
+            icon: notifImg
+        }
+        notif = new Notification(notifTitle, options);
+    }
+    if(parseInt(TempInt) > 50) {
+
+        notifTitle = "alerte : Appelez les pompiers ou arrêtez votre barbecue !";
+        notifBody = 'Température intérieur : ' + TempInt + '.';
+        notifImg = '/www/hothothot/assets/images/android-chrome-192x192.png';
+        options = {
+            body: notifBody,
+            icon: notifImg
+        }
+        notif = new Notification(notifTitle, options);
+    }
+    if(parseInt(TempInt) > 22) {
+
+        notifTitle = "alerte : Baissez le chauffage !";
+        notifBody = 'Température intérieur : ' + TempInt + '.';
+        notifImg = '/www/hothothot/assets/images/android-chrome-192x192.png';
+        options = {
+            body: notifBody,
+            icon: notifImg
+        }
+        notif = new Notification(notifTitle, options);
+    }
+    if(parseInt(TempInt) < 12) {
+
+        notifTitle = "alerte : montez le chauffage ou mettez un gros pull !";
+        notifBody = 'Température intérieur : ' + TempInt + '.';
+        notifImg = '/www/hothothot/assets/images/android-chrome-192x192.png';
+        options = {
+            body: notifBody,
+            icon: notifImg
+        }
+        notif = new Notification(notifTitle, options);
+    }
+    if(parseInt(TempInt) < 0) {
+
+        notifTitle = "alerte : canalisations gelées, appelez SOS plombier et mettez un bonnet !";
+        notifBody = 'Température intérieur : ' + TempInt + '.';
+        notifImg = '/www/hothothot/assets/images/android-chrome-192x192.png';
+        options = {
+            body: notifBody,
+            icon: notifImg
+        }
+        notif = new Notification(notifTitle, options);
+    }
+    setTimeout(notification, 2000);
+}
 
 //On génére un nombre aléatoire pour la démo  
 function getRandomInt(max) {  
@@ -119,7 +183,7 @@ function getRandomInt(max) {
 //partie javascript pour l'ajout à l'écran d'accueil
 let deferredPrompt;  
 const addBtn = document.querySelector('.add-button');  
-addBtn.style.display = 'none';  
+addBtn.style.display = 'none';
 
 window.addEventListener('beforeinstallprompt', (e) => {  
     // Prevent Chrome 67 and earlier from automatically showing the prompt  
@@ -145,6 +209,3 @@ window.addEventListener('beforeinstallprompt', (e) => {
           });  
     });  
 });
-
-//TODO : ajouter dans la page de demande d'ajout à l'écran d'accueil
-//<button class="add-button">Ajouter</button>
