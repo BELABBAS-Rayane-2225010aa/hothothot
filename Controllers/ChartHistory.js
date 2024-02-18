@@ -26,6 +26,42 @@ export class ChartHistory {
         this.displayTemperature();
         this.updateChart();
         this.currentIndex++;
+        this.storeData(data.Nom);
+    }
+
+    storeData(status) {
+        var json = JSON.stringify(this.histo.innerHTML);
+        var Cjson = {
+            temperature : this.temperature,
+            lengthTab : this.lengthTab,
+            timestamp : this.timestamp,
+            currentIndex : this.currentIndex
+        };
+        Cjson = JSON.stringify(Cjson);
+        if(status === "exterieur") {
+            localStorage.setItem("dataChartExt", Cjson);
+            localStorage.setItem("dataHistoExt", json);
+        }
+        else {
+            localStorage.setItem("dataChartInt", Cjson);
+            localStorage.setItem("dataHistoInt", json);
+        }
+    }
+
+
+    loadData(chartData, histo) {
+        this.temperature = chartData.temperature;
+        this.lengthTab = chartData.lengthTab;
+        this.timestamp = chartData.timestamp;
+        this.currentIndex = chartData.currentIndex;
+        this.histo.innerHTML = histo;
+        
+        const tabLabel = this.lengthTab.length > 20 ? this.lengthTab.slice(-20) : this.lengthTab;
+        const tabData = this.temperature.slice(-20).map((value, index) => value); // Map to last 20 values
+
+        this.myChart.data.labels = tabLabel;
+        this.myChart.data.datasets[0].data = tabData;
+        this.myChart.update();
     }
 
     displayTemperature() {
