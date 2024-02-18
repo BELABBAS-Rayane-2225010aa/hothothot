@@ -43,11 +43,15 @@ socket.onopen = function(event) {
 
     // au retour...
     socket.onmessage = function(event) {
-        console.log("Message reçu : " + event.data);
+        console.log("Message reçu : " + event);
+        console.log(event.data); // renvoie : {"HotHotHot":"Api v1.0","capteurs":[{"type":"Thermique","Nom":"interieur","Valeur":"26.6","Timestamp":1708256846},{"type":"Thermique","Nom":"exterieur","Valeur":"15.9","Timestamp":1708256847}]}
+        let data = JSON.parse(event.data);
+        //tempSensorInt.notify(data.capteurs[0]);
+        tempSensorExt.notify(data.capteurs[1]);
+        console.log(JSON.parse(event.data)); // renvoie un objet comme data de l'api ajax avec les deux capteurs
+        // console.log(JSON.parse(event)); marche pas
     }
 };
-
-	
 
 setInterval(() => {
     // récupération des données de température extérieure
