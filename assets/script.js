@@ -64,6 +64,7 @@ socket.onopen = function(event) {
 
     // au retour...
     socket.onmessage = function(event) {
+        clearInterval(intervalId);
         console.log("Message reçu : " + event.data);
         localStorage.setItem("data", event.data);
         let data = JSON.parse(event.data);
@@ -75,7 +76,7 @@ socket.onopen = function(event) {
     }
 };
 
-setInterval(() => {
+let intervalId = setInterval(() => {
     // récupération des données de température extérieure
     fetch("https://hothothot.dog/api/capteurs/exterieur",
 		{
@@ -154,7 +155,7 @@ function displayMsg(){
     }
 }
 
-/*if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator) {
 
     navigator.serviceWorker.register('sw.js').then(function(reg) {
         // enregistrement ok
@@ -163,7 +164,7 @@ function displayMsg(){
         // echec de l'enregistrement
         console.log('Registration failed with ' + error);
     });
-}*/
+}
 
 let button = document.querySelector('#notifications');
 button.addEventListener('click', function(e) {
