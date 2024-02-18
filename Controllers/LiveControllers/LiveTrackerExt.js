@@ -14,8 +14,6 @@ export class LiveTrackerExt extends LiveTrackerInterface{
         this.displayTemperature();
         this.dayMinMax(this.temperature);
         this.dayTemperature();
-        var json = JSON.stringify(data);
-        localStorage.setItem("dataExt", json);
     }
 
     /**
