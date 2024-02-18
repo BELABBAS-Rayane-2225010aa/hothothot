@@ -4,14 +4,17 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>HotHotHot</title>
-        <link rel="stylesheet" href="/assets/style.css">
+        <link rel="stylesheet" href="assets/style.css">
+        <script type="module" src="sw.js" defer></script>
         <script type="module" src="/assets/script.js" defer></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+        <link rel="manifest" href="/www/hothothot/manifest.webmanifest">
     </head>
     <body>
         <nav>
             <a class="navBar" href="/index.html">Accueil</a>
             <a class="navBar" href="/View/documentation.html">Documentation</a>
+            <a class="navBar" href="/View/profil.html">Profil</a>
             <a class="navBar" href="/View/logout.html">Déconnexion</a>
         </nav>
         <h1>Application de gestion de capteurs</h1>
@@ -48,13 +51,13 @@
             <div id="panel-1" role="tabpanel" tabindex="0" aria-labelledby="tab-1">
                 <section id="sectionLive" class="nomTemporaire">
                     <section id="tempExt">
-                        <h2>Relevé des températures extérieur</h2>
+                        <h2>Relevé des températures extérieur (en <abbr title='degrés Celsius'>°C</abbr>)</h2>
                         <p id="msgExt" role="alert"></p>
                         <p id="tabExt" aria-live="polite"></p>
                         <p id="minMaxExt" aria-live="polite"></p>
                     </section>
                     <section id="tempInt">
-                        <h2>Relevé des températures intérieur</h2>
+                        <h2>Relevé des températures intérieur (en <abbr title='degrés Celsius'>°C</abbr>)</h2>
                         <p id="msgInt" role="alert"></p>
                         <p id="tabInt" aria-live="polite"></p>
                         <p id="minMaxInt" aria-live="polite"></p>
@@ -76,10 +79,11 @@
                 </section>
             </div>
             <div id="panel-3" role="tabpanel" tabindex="0" aria-labelledby="tab-3" hidden>
-                <section id="sectionNotif">
-                    Ici les notifications
+                <section id="sectionNotif" class="nomTemporaire">
+                    <button id="notifications">Activer les notifications</button>
                 </section>
             </div>
         </div>
+        <button class="add-button">Ajouter</button>
     </body>
 </html>
