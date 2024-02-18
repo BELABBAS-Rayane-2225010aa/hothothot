@@ -54,6 +54,10 @@ if(localStorage.getItem("data") !== null) {
     console.log("localStorage vide");
 }
 
+
+// Connexion au serveur
+// Il est possible d'avoir besoins de relancer le serveur
+// Si vous voyez "Connexion établie" dans la console, c'est que la connexion est établie
 let socket = new WebSocket('wss://ws.hothothot.dog:9502');
 
 socket.onopen = function(event) {
@@ -64,7 +68,7 @@ socket.onopen = function(event) {
 
     // au retour...
     socket.onmessage = function(event) {
-        clearInterval(intervalId);
+        //clearInterval(intervalId);
         console.log("Message reçu : " + event.data);
         localStorage.setItem("data", event.data);
         let data = JSON.parse(event.data);
@@ -76,6 +80,11 @@ socket.onopen = function(event) {
     }
 };
 
+/*
+Ne marche pas dans notre configuration actuelle
+A utiliser seulement dans des cas de test et avec un clear du cache du naviguateur à chaque fois
+
+// pour faire comme si le serveur nous répond quelques chose
 let intervalId = setInterval(() => {
     // récupération des données de température extérieure
     fetch("https://hothothot.dog/api/capteurs/exterieur",
@@ -121,6 +130,7 @@ let intervalId = setInterval(() => {
         })
     displayMsg()
     }, 5000); // récupération tout les 5 secondes
+*/
 
 function displayMsg(){
     console.log("displayMsg");
