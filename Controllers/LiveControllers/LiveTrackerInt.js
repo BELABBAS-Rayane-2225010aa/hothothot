@@ -14,6 +14,8 @@ export class LiveTrackerInt extends LiveTrackerInterface{
         this.displayTemperature();
         this.dayMinMax(this.temperature);
         this.dayTemperature();
+        var json = JSON.stringify(data);
+        localStorage.setItem("dataInt", json);
     }
 
     /**
@@ -26,6 +28,8 @@ export class LiveTrackerInt extends LiveTrackerInterface{
         } else if (this.temperature < 12) {
             this.liveDisplay.className = "green";
             this.notifcation.innerHTML = "Montez le chauffage ou mettez un gros pull !";
+        } else if (this.temperature > 12) {
+            this.notifcation.innerHTML = "Température intérieur normale.";
         } else if (this.temperature > 22) {
             this.liveDisplay.className = "orange";
             this.notifcation.innerHTML = "Baissez le chauffage !";

@@ -5,7 +5,6 @@ export class Observable {
 
     subscribe(ob) {
         this.observers.push(ob);
-        console.log(this.observers);
     }
 
     unsubscribe(ob) {

@@ -12,6 +12,14 @@ let liveTempTrackerExt = new LiveTrackerExt(notificationExt, liveDisplayExt, liv
 const histoExt = document.getElementById("extHisto");
 const chartViewExt = document.getElementById("extChart");
 let tempHistoryExt = new ChartHistory(histoExt, chartViewExt);
+if(localStorage.getItem("dataChartExt") !== null && localStorage.getItem("dataHistoExt") !== null) {
+    let chartData = JSON.parse(localStorage.getItem("dataChartExt"));
+    let histoData = JSON.parse(localStorage.getItem("dataHistoExt"));
+    tempHistoryExt.loadData(chartData, histoData);
+    console.log("localStorage ChartExt initialisé");
+} else {
+    console.log("localStorage ChartExt vide");
+}
 
 tempSensorExt.subscribe(liveTempTrackerExt);
 tempSensorExt.subscribe(tempHistoryExt);
@@ -25,9 +33,26 @@ let liveTempTrackerInt = new LiveTrackerInt(notificationInt, liveDisplayInt, liv
 const histoInt = document.getElementById("intHisto");
 const chartViewInt = document.getElementById("intChart");
 let tempHistoryInt = new ChartHistory(histoInt, chartViewInt);
+if(localStorage.getItem("dataChartInt") !== null && localStorage.getItem("dataHistoInt") !== null) {
+    let chartData = JSON.parse(localStorage.getItem("dataChartInt"));
+    let histoData = JSON.parse(localStorage.getItem("dataHistoInt"));
+    tempHistoryInt.loadData(chartData, histoData);
+    console.log("localStorage ChartInt initialisé");
+} else {
+    console.log("localStorage ChartInt vide");
+}
 
 tempSensorInt.subscribe(liveTempTrackerInt);
 tempSensorInt.subscribe(tempHistoryInt);
+
+if(localStorage.getItem("data") !== null) {
+    let data = JSON.parse(localStorage.getItem("data"));
+    liveTempTrackerInt.update(data.capteurs[0]);
+    liveTempTrackerExt.update(data.capteurs[1]);
+    console.log("localStorage initialisé");
+} else {
+    console.log("localStorage vide");
+}
 
 let socket = new WebSocket('wss://ws.hothothot.dog:9502');
 
@@ -39,13 +64,16 @@ socket.onopen = function(event) {
 
     // au retour...
     socket.onmessage = function(event) {
+        console.log("Message reçu : " + event.data);
+        localStorage.setItem("data", event.data);
         let data = JSON.parse(event.data);
+        //var json = JSON.stringify(data);
+        
         tempSensorInt.notify(data.capteurs[0]);
         tempSensorExt.notify(data.capteurs[1]);
     }
 };
 
-/*
 setInterval(() => {
     // récupération des données de température extérieure
     fetch("https://hothothot.dog/api/capteurs/exterieur",
@@ -59,8 +87,15 @@ setInterval(() => {
         .then(function(response) {
             return response.json().then(function(response) {
                 let data = response.capteurs[0];
-                data.Valeur = Math.floor(Math.random() * (40 - (-10)) + (-10));
-                console.log(data);
+                console.log(response);
+                let storage = JSON.parse(localStorage.getItem("data"))
+                if(storage == undefined){
+                    localStorage.setItem("data", JSON.stringify(response));
+                } else {
+                    storage.capteurs[1] = response.capteurs[0];
+                    console.log(storage);
+                    localStorage.setItem("data", JSON.stringify(storage));
+                }
                 tempSensorExt.notify(response.capteurs[0]);
             })
         })
@@ -76,14 +111,18 @@ setInterval(() => {
         .then(function(response) {
             return response.json().then(function(response) {
                 let data = response.capteurs[0];
-                data.Valeur = Math.floor(Math.random() * (40 - (-10)) + (-10));
-                //console.log("intérieur :",data);
+                let storage = JSON.parse(localStorage.getItem("data"))
+                if(storage == undefined){
+                    localStorage.setItem("data", JSON.stringify(response));
+                } else {
+                    storage.capteurs[0] = response.capteurs[0];
+                    localStorage.setItem("data", JSON.stringify(storage));
+                }
                 tempSensorInt.notify(response.capteurs[0]);
             })
         })
-    }, 2000); // récupération tout les 2 secondes
+    }, 5000); // récupération tout les 5 secondes
 
- */
 
 /*if ('serviceWorker' in navigator) {
 
@@ -94,7 +133,7 @@ setInterval(() => {
         // echec de l'enregistrement
         console.log('Registration failed with ' + error);
     });
-}
+}*/
 
 let button = document.querySelector('#notifications');
 button.addEventListener('click', function(e) {
