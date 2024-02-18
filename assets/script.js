@@ -28,7 +28,8 @@ let tempHistoryInt = new ChartHistory(histoInt, chartViewInt);
 
 tempSensorInt.subscribe(liveTempTrackerInt);
 tempSensorInt.subscribe(tempHistoryInt);
-var socket = new WebSocket('wss://ws.hothothot.dog:9502');
+
+let socket = new WebSocket('wss://ws.hothothot.dog:9502');
 
 socket.onopen = function(event) {
     console.log("Connexion établie");
@@ -38,17 +39,53 @@ socket.onopen = function(event) {
 
     // au retour...
     socket.onmessage = function(event) {
-        console.log("Message reçu : " + event);
-        console.log(event.data); // renvoie : {"HotHotHot":"Api v1.0","capteurs":[{"type":"Thermique","Nom":"interieur","Valeur":"26.6","Timestamp":1708256846},{"type":"Thermique","Nom":"exterieur","Valeur":"15.9","Timestamp":1708256847}]}
         let data = JSON.parse(event.data);
         tempSensorInt.notify(data.capteurs[0]);
         tempSensorExt.notify(data.capteurs[1]);
-        console.log(JSON.parse(event.data)); // renvoie un objet comme data de l'api ajax avec les deux capteurs
-        // console.log(JSON.parse(event)); marche pas
     }
 };
 
-if ('serviceWorker' in navigator) {
+/*
+setInterval(() => {
+    // récupération des données de température extérieure
+    fetch("https://hothothot.dog/api/capteurs/exterieur",
+		{
+		    headers: {
+		      'Accept': 'application/json',
+		      'Content-Type': 'application/json'
+		    },
+		    method: "POST"
+        })
+        .then(function(response) {
+            return response.json().then(function(response) {
+                let data = response.capteurs[0];
+                data.Valeur = Math.floor(Math.random() * (40 - (-10)) + (-10));
+                console.log(data);
+                tempSensorExt.notify(response.capteurs[0]);
+            })
+        })
+    // récupération des données de température intérieure
+    fetch("https://hothothot.dog/api/capteurs/interieur",
+        {
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            method: "POST"
+        })
+        .then(function(response) {
+            return response.json().then(function(response) {
+                let data = response.capteurs[0];
+                data.Valeur = Math.floor(Math.random() * (40 - (-10)) + (-10));
+                //console.log("intérieur :",data);
+                tempSensorInt.notify(response.capteurs[0]);
+            })
+        })
+    }, 2000); // récupération tout les 2 secondes
+
+ */
+
+/*if ('serviceWorker' in navigator) {
 
     navigator.serviceWorker.register('/www/hothothot/sw.js').then(function(reg) {
         // enregistrement ok
@@ -182,63 +219,6 @@ window.addEventListener('beforeinstallprompt', (e) => {
         });
     });
 });
-
-let socket = new WebSocket('wss://ws.hothothot.dog:9502');
-
-socket.onopen = function(event) {
-    console.log("Connexion établie");
-
-    //Envoi d'un message au serveur (obligatoire)
-    socket.send("coucou !");
-
-    // au retour...
-    socket.onmessage = function(event) {
-        let data = JSON.parse(event.data);
-        tempSensorInt.notify(data.capteurs[0]);
-        tempSensorExt.notify(data.capteurs[1]);
-    }
-};
-
-/*
-setInterval(() => {
-    // récupération des données de température extérieure
-    /*fetch("https://hothothot.dog/api/capteurs/exterieur",
-		{
-		    headers: {
-		      'Accept': 'application/json',
-		      'Content-Type': 'application/json'
-		    },
-		    method: "POST"
-        })
-        .then(function(response) {
-            return response.json().then(function(response) {
-                let data = response.capteurs[0];
-                data.Valeur = Math.floor(Math.random() * (40 - (-10)) + (-10));
-                console.log(data);
-                tempSensorExt.notify(response.capteurs[0]);
-            })
-        })*/
-    // récupération des données de température intérieure
-    fetch("https://hothothot.dog/api/capteurs/interieur",
-        {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST"
-        })
-        .then(function(response) {
-            return response.json().then(function(response) {
-                let data = response.capteurs[0];
-                data.Valeur = Math.floor(Math.random() * (40 - (-10)) + (-10));
-                //console.log("intérieur :",data);
-                tempSensorInt.notify(response.capteurs[0]);
-            })
-        })
-    }, 2000); // récupération tout les 2 secondes
-
- */
-
 
 // Mise en place des onglets
 const tabs = document.querySelectorAll('[role="tab"]');
