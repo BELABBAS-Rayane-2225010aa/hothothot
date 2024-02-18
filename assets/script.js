@@ -1,6 +1,5 @@
 import { Observable } from "../Controllers/Observable.js";
-import { LiveTrackerExt } from "../Controllers/LiveControllers/LiveTrackerExt.js";
-import { LiveTrackerInt } from "../Controllers/LiveControllers/LiveTrackerInt.js";
+import { LiveTracker } from "../Controllers/LiveControllers/LiveTracker.js";
 import { ChartHistory } from "../Controllers/ChartHistory.js";
 
 let tempSensorExt = new Observable();
@@ -8,7 +7,7 @@ let tempSensorExt = new Observable();
 const notificationExt = document.getElementById("msgExt");
 const liveDisplayExt = document.getElementById("tabExt");
 const liveMinMaxExt = document.getElementById("minMaxExt");
-let liveTempTrackerExt = new LiveTrackerExt(notificationExt, liveDisplayExt, liveMinMaxExt);
+let liveTempTrackerExt = new LiveTracker(notificationExt, liveDisplayExt, liveMinMaxExt);
 const histoExt = document.getElementById("extHisto");
 const chartViewExt = document.getElementById("extChart");
 let tempHistoryExt = new ChartHistory(histoExt, chartViewExt);
@@ -29,7 +28,7 @@ let tempSensorInt = new Observable();
 const notificationInt = document.getElementById("msgInt");
 const liveDisplayInt = document.getElementById("tabInt");
 const liveMinMaxInt = document.getElementById("minMaxInt");
-let liveTempTrackerInt = new LiveTrackerInt(notificationInt, liveDisplayInt, liveMinMaxInt);
+let liveTempTrackerInt = new LiveTracker(notificationInt, liveDisplayInt, liveMinMaxInt);
 const histoInt = document.getElementById("intHisto");
 const chartViewInt = document.getElementById("intChart");
 let tempHistoryInt = new ChartHistory(histoInt, chartViewInt);
@@ -71,6 +70,7 @@ socket.onopen = function(event) {
         
         tempSensorInt.notify(data.capteurs[0]);
         tempSensorExt.notify(data.capteurs[1]);
+        displayMsg()
     }
 };
 
@@ -86,14 +86,12 @@ setInterval(() => {
         })
         .then(function(response) {
             return response.json().then(function(response) {
-                let data = response.capteurs[0];
                 console.log(response);
                 let storage = JSON.parse(localStorage.getItem("data"))
                 if(storage == undefined){
                     localStorage.setItem("data", JSON.stringify(response));
                 } else {
                     storage.capteurs[1] = response.capteurs[0];
-                    console.log(storage);
                     localStorage.setItem("data", JSON.stringify(storage));
                 }
                 tempSensorExt.notify(response.capteurs[0]);
@@ -110,7 +108,6 @@ setInterval(() => {
         })
         .then(function(response) {
             return response.json().then(function(response) {
-                let data = response.capteurs[0];
                 let storage = JSON.parse(localStorage.getItem("data"))
                 if(storage == undefined){
                     localStorage.setItem("data", JSON.stringify(response));
@@ -121,19 +118,49 @@ setInterval(() => {
                 tempSensorInt.notify(response.capteurs[0]);
             })
         })
+    displayMsg()
     }, 5000); // récupération tout les 5 secondes
 
+    function displayMsg(){
+        let TempExt = document.getElementById('tabExt').innerHTML;
+        let TempInt = document.getElementById('tabInt').innerHTML;
+    
+        if(parseInt(TempExt) > 35) {
+            document.getElementById('tabExt').className = "red";
+            document.getElementById('msgExt').innerHTML = "alerte : Hot Hot Hot !";
+        }
+        if(parseInt(TempExt) < 0) {
+            document.getElementById('tabExt').className = "blue";
+            document.getElementById('msgExt').innerHTML = "alerte : Banquise en vue !";
+        }
+        if(parseInt(TempInt) > 50) {
+            document.getElementById('tabInt').className = "red";
+            document.getElementById('msgInt').innerHTML = "alerte : Appelez les pompiers ou arrêtez votre barbecue !";
+        }
+        if(parseInt(TempInt) > 22) {
+            document.getElementById('tabInt').className = "orange";
+            document.getElementById('msgInt').innerHTML = "alerte : Baissez le chauffage !";
+        }
+        if(parseInt(TempInt) < 12) {
+            document.getElementById('tabInt').className = "green";
+            document.getElementById('msgInt').innerHTML = "alerte : montez le chauffage ou mettez un gros pull !";
+        }
+        if(parseInt(TempInt) < 0) {
+            document.getElementById('tabInt').className = "blue";
+            document.getElementById('msgInt').innerHTML = "alerte : canalisations gelées, appelez SOS plombier et mettez un bonnet !";
+        }
+    }
 
-/*if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator) {
 
-    navigator.serviceWorker.register('/www/hothothot/sw.js').then(function(reg) {
+    navigator.serviceWorker.register('sw.js').then(function(reg) {
         // enregistrement ok
         console.log('Registration succeeded. Scope is ' + reg.scope);
     }).catch(function(error) {
         // echec de l'enregistrement
         console.log('Registration failed with ' + error);
     });
-}*/
+}
 
 let button = document.querySelector('#notifications');
 button.addEventListener('click', function(e) {
@@ -148,8 +175,6 @@ button.addEventListener('click', function(e) {
 function notification() {
     let TempExt = document.getElementById('tabExt').innerHTML;
     let TempInt = document.getElementById('tabInt').innerHTML;
-    console.log(TempExt);
-    console.log(TempInt);
     let notifTitle = "";
     let notifBody = "";
     let notifImg = "";
@@ -221,7 +246,7 @@ function notification() {
         }
         notif = new Notification(notifTitle, options);
     }
-    setTimeout(notification, 2000);
+    setTimeout(notification, 20000);
 }
 
 // Mise en place de l'installation de l'application
