@@ -48,6 +48,7 @@ if(localStorage.getItem("data") !== null) {
     let data = JSON.parse(localStorage.getItem("data"));
     liveTempTrackerInt.update(data.capteurs[0]);
     liveTempTrackerExt.update(data.capteurs[1]);
+    displayMsg()
     console.log("localStorage initialisé");
 } else {
     console.log("localStorage vide");
@@ -86,7 +87,6 @@ setInterval(() => {
         })
         .then(function(response) {
             return response.json().then(function(response) {
-                console.log(response);
                 let storage = JSON.parse(localStorage.getItem("data"))
                 if(storage == undefined){
                     localStorage.setItem("data", JSON.stringify(response));
@@ -121,37 +121,40 @@ setInterval(() => {
     displayMsg()
     }, 5000); // récupération tout les 5 secondes
 
-    function displayMsg(){
-        let TempExt = document.getElementById('tabExt').innerHTML;
-        let TempInt = document.getElementById('tabInt').innerHTML;
-    
-        if(parseInt(TempExt) > 35) {
-            document.getElementById('tabExt').className = "red";
-            document.getElementById('msgExt').innerHTML = "alerte : Hot Hot Hot !";
-        }
-        if(parseInt(TempExt) < 0) {
-            document.getElementById('tabExt').className = "blue";
-            document.getElementById('msgExt').innerHTML = "alerte : Banquise en vue !";
-        }
-        if(parseInt(TempInt) > 50) {
-            document.getElementById('tabInt').className = "red";
-            document.getElementById('msgInt').innerHTML = "alerte : Appelez les pompiers ou arrêtez votre barbecue !";
-        }
-        if(parseInt(TempInt) > 22) {
-            document.getElementById('tabInt').className = "orange";
-            document.getElementById('msgInt').innerHTML = "alerte : Baissez le chauffage !";
-        }
-        if(parseInt(TempInt) < 12) {
-            document.getElementById('tabInt').className = "green";
-            document.getElementById('msgInt').innerHTML = "alerte : montez le chauffage ou mettez un gros pull !";
-        }
-        if(parseInt(TempInt) < 0) {
-            document.getElementById('tabInt').className = "blue";
-            document.getElementById('msgInt').innerHTML = "alerte : canalisations gelées, appelez SOS plombier et mettez un bonnet !";
-        }
-    }
+function displayMsg(){
+    console.log("displayMsg");
+    let TempExt = document.getElementById('tabExt').innerHTML;
+    let TempInt = document.getElementById('tabInt').innerHTML;
 
-if ('serviceWorker' in navigator) {
+    if(parseInt(TempExt) > 35) {
+        document.getElementById('tabExt').className = "red";
+        document.getElementById('msgExt').innerHTML = "alerte : Hot Hot Hot !";
+    } else if(parseInt(TempExt) < 0) {
+        document.getElementById('tabExt').className = "blue";
+        document.getElementById('msgExt').innerHTML = "alerte : Banquise en vue !";
+    } else {
+        document.getElementById('tabExt').className = "green";
+        document.getElementById('msgExt').innerHTML = "alerte : Température extérieure normale.";
+    }
+    if(parseInt(TempInt) > 50) {
+        document.getElementById('tabInt').className = "red";
+        document.getElementById('msgInt').innerHTML = "alerte : Appelez les pompiers ou arrêtez votre barbecue !";
+    } else if(parseInt(TempInt) > 22) {
+        document.getElementById('tabInt').className = "orange";
+        document.getElementById('msgInt').innerHTML = "alerte : Baissez le chauffage !";
+    } else if(parseInt(TempInt) < 12) {
+        document.getElementById('tabInt').className = "green";
+        document.getElementById('msgInt').innerHTML = "alerte : montez le chauffage ou mettez un gros pull !";
+    } else if(parseInt(TempInt) < 0) {
+        document.getElementById('tabInt').className = "blue";
+        document.getElementById('msgInt').innerHTML = "alerte : canalisations gelées, appelez SOS plombier et mettez un bonnet !";
+    } else {
+        document.getElementById('tabInt').className = "green";
+        document.getElementById('msgInt').innerHTML = "alerte : Température extérieure normale.";
+    }
+}
+
+/*if ('serviceWorker' in navigator) {
 
     navigator.serviceWorker.register('sw.js').then(function(reg) {
         // enregistrement ok
@@ -160,7 +163,7 @@ if ('serviceWorker' in navigator) {
         // echec de l'enregistrement
         console.log('Registration failed with ' + error);
     });
-}
+}*/
 
 let button = document.querySelector('#notifications');
 button.addEventListener('click', function(e) {
