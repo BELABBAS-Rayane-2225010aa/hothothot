@@ -30,7 +30,7 @@ tempSensorInt.subscribe(tempHistoryInt);
 
 if ('serviceWorker' in navigator) {
 
-    navigator.serviceWorker.register('/www/hothothot/sw.js').then(function(reg) {
+    navigator.serviceWorker.register('sw.js').then(function(reg) {
         // enregistrement ok
         console.log('Registration succeeded. Scope is ' + reg.scope);
     }).catch(function(error) {
